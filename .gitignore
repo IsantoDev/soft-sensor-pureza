@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+outputs/
+dados/sensores_coluna_destilacao.csv
+CLAUDE.md
+GABARITO
