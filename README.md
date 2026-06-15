@@ -1,69 +1,59 @@
-# Trilha de Estudo — Soft Sensor Industrial com Séries Temporais
+# Soft Sensor Industrial — Estimativa de Pureza com Séries Temporais
 
-Estudo guiado, **prático e teórico**, que termina na construção de um projeto de
-ciência de dados aplicado à indústria: um **soft sensor** que estima a pureza de um
-produto em uma coluna de destilação a partir de sensores baratos, usando Python e
-scikit-learn.
+Projeto de ciência de dados aplicado à indústria: um **soft sensor** que estima a
+pureza de um produto em uma coluna de destilação a partir de sensores baratos
+(temperatura, pressão, vazão), usando Python e scikit-learn.
 
-**Objetivo:** fechar os gaps de *machine learning, séries temporais e estatística
-aplicada* e ter uma peça de portfólio que você **entende e sabe defender** — pensado
-para a vaga de Ciência de Dados da Radix.
+## O problema
 
----
+Em colunas de destilação industriais, medir a **pureza do produto** exige análise de
+laboratório — cara e lenta. Sensores de temperatura, pressão e vazão, por outro lado,
+são baratos e medem o tempo todo.
 
-## Como usar com o Claude Code
+Um **soft sensor** é um modelo de ML que estima a variável cara (pureza) a partir das
+variáveis baratas, em **tempo real**, substituindo o laboratório.
 
-1. Abra esta pasta no **Claude Code** (`claude` no terminal, dentro do diretório).
-2. O Claude Code lê o `CLAUDE.md` e passa a atuar como **seu tutor**: ele te guia,
-   te faz escrever o código, dá dicas em vez de respostas e checa seu entendimento
-   antes de avançar.
-3. Comece dizendo: *"Vamos começar o módulo 00"* — e siga a ordem dos módulos.
-4. Escreva **seu** código na pasta `meu_trabalho/`. O tutor revisa de lá.
+## Por que é série temporal?
 
-> O `GABARITO/` existe só para conferência **depois** de você tentar. Resista a abrir
-> antes — o ganho está na tentativa, não na resposta pronta.
+Os dados chegam ordenados no tempo (1 leitura/hora) e o estado atual do processo
+depende do passado recente (inércia térmica). Além disso, há:
 
----
+- **Tendência:** incrustação (*fouling*) degrada a separação ao longo dos dias
+- **Sazonalidade:** ciclo diário de temperatura ambiente afeta o processo
+- **Dados faltantes:** sensores falham — tratamento especial necessário
 
-## Setup (uma vez)
+## Stack
+
+Python · pandas · scikit-learn · matplotlib · seaborn
+
+## Setup
 
 ```bash
 pip install -r requirements.txt
-python dados/gerar_dados.py     # gera dados/sensores_coluna_destilacao.csv
+python dados/gerar_dados.py     # gera o dataset sintético
 ```
 
----
+## Estrutura do projeto
 
-## Mapa da trilha
-
-| Módulo | Tema | Teoria / Prática |
-|---|---|---|
-| 00 | Setup e o problema do soft sensor | Teoria |
-| 01 | Fundamentos de séries temporais | Teoria + exercícios |
-| 02 | EDA e qualidade de dados | Prática |
-| 03 | Tratamento de dados faltantes | Teoria + prática |
-| 04 | Engenharia de features temporais | Teoria + prática |
-| 05 | Split temporal e vazamento de dados | Teoria + prática |
-| 06 | Modelagem com scikit-learn | Teoria + prática |
-| 07 | Avaliação e diagnóstico | Teoria + prática |
-| 08 | Monitoramento em produção (drift) | Teoria + prática |
-| 09 | Montagem do projeto final + defesa | Projeto |
-
-Ao fim, você terá o pipeline completo escrito **por você**, um README próprio e
-respostas ensaiadas para a entrevista.
-
----
-
-## Estrutura
+| Módulo | Tema |
+|---|---|
+| 01 | Fundamentos de séries temporais |
+| 02 | EDA e qualidade de dados |
+| 03 | Tratamento de dados faltantes |
+| 04 | Engenharia de features (lags, janelas móveis) |
+| 05 | Split temporal e vazamento de dados |
+| 06 | Modelagem com scikit-learn |
+| 07 | Avaliação e diagnóstico |
+| 08 | Monitoramento em produção (drift) |
+| 09 | Pipeline final |
 
 ```
-soft-sensor-estudo/
-├── CLAUDE.md              # instruções do tutor (o Claude Code lê)
-├── README.md             # este arquivo
+soft-sensor-pureza/
+├── README.md
 ├── requirements.txt
 ├── dados/
-│   └── gerar_dados.py    # gerador dos dados (já pronto)
-├── modulos/              # a trilha, 00 a 09
-├── meu_trabalho/         # VOCÊ escreve seu código aqui
-└── GABARITO/             # referência — só conferir depois de tentar
+│   └── gerar_dados.py    # gerador do dataset sintético
+├── modulos/              # teoria e exercícios de cada módulo
+├── meu_trabalho/         # scripts desenvolvidos durante o estudo
+└── outputs/              # gráficos e métricas gerados
 ```
