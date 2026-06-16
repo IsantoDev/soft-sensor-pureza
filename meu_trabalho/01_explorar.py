@@ -11,4 +11,9 @@ plt.plot(df.index, df['pureza_produto'])
 plt.title('Pureza do Produto ao Longo do Tempo')
 plt.xlabel('Tempo')
 plt.ylabel('Pureza (%)')
+
+for lag in [1,6,24]:
+    print(f'Autocorrelação com lag {lag}h: {df["pureza_produto"].autocorr(lag=lag):.4f}')
 plt.show()
+
+
